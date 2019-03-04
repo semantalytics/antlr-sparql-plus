@@ -1,0 +1,102 @@
+5.1  Grammar
+This section specifies the SPARQL
+⋆
+grammar as an extension of the standard SPARQL 1.1 gram-
+mar [HSP13]. Elements of the grammar that are not specified ex
+plicitly in this section are defined
+as given in [HSP13, Section 19.8].
+An
+embedded triple pattern
+is a new syntax element that conforms to the following, new gr
+am-
+mar rules:
+E
+mbTP ::= ’
+<<
+’ VarOrIRIOrLitOrEmbTP Verb VarOrIRIOrLitOrEmbTP ’
+>>
+’
+VarOrIRIOrLitOrEmbTP ::= Var
+|
+iri
+|
+RDFLiteral
+|
+NumericLiteral
+|
+BooleanLiteral
+|
+EmbTP
+As the given grammar rules indicate, an embedded triple patt
+ern may contain other embedded triple
+patterns. Embedded triple patterns may be used in a query in t
+he following two ways: (i) they
+are part of a BIND clause (which corresponds to SPARQL
+⋆
+expressions of the form (
+tp
+AS
+?
+v
+)), or
+(ii) they are embedded in a triple
+⋆
+pattern or in a property path pattern. Both of these options a
+re
+specified and discussed in the following.
+SPARQL introduces the BIND clause for assigning the value of
+evaluating a given expression to a
+variable. To enable the use of embedded triple patterns in BI
+ND clauses (instead of an expression),
+the following two extensions to the grammar are necessary. F
+irst, a new grammar rule is added:
+10
+E
+xpressionOrEmbTP ::= Expression
+|
+|
+|
+EmbTP
+Second, the original grammar rule
+[60]
+is redefined as follows:
+3
+B
+ind ::= ’BIND’ ’(’
+ExpressionOrEmbTP
+’AS’ Var ’)’
+An embedded triple pattern may not only be used in a BIND claus
+e but it may also be embedded in
+a property path pattern or in a triple
+⋆
+pattern. More precisely, in the extended syntax the subject
+or object of a property path pattern can be an embedded triple
+pattern (instead of an RDF term or
+a variable). Similarly, triple
+⋆
+patterns may have an embedded triple pattern in the subject p
+osition
+or in the object position (cf. Definition 6). To this end, the g
+rammar is extended with a new rule:
+V
+arOrTermOrEmbTP ::= Var
+|
+GraphTerm
+|
+EmbTP
+Moreover, the original grammar rules
+[80]
+and
+[81]
+are redefined:
+O
+bject ::= GraphNode
+|
+|
+|
+EmbTP
+TriplesSameSubjectPath ::=
+VarOrTermOrEmbTP
+PropertyListPathNotEmpty
+|
+TriplesNodePath PropertyListPath
